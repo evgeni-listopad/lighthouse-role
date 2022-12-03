@@ -1,0 +1,25 @@
+---
+# Lighthouse
+- name: Install Lighthouse
+  become: true
+  block:
+  - name: Get Lightkhouse Archive
+    ansible.builtin.get_url:
+      url: "{{ lighthouse_link }}"
+      dest: ./lighthouse.zip
+  - name: Unpack Lighthouse Archive
+    become: true
+    ansible.builtin.unarchive:
+      src: ./lighthouse.zip
+      dest: /usr/share/nginx
+      remote_src: true
+  - name: Copy nginx configuration file
+    become: true
+    ansible.builtin.template:
+      src: nginx_lighthouse.conf
+      dest: "/etc/nginx/conf.d/lighthouse.conf"
+      owner: "0"
+      group: "0"
+      mode: "0664"
+    notify: Start nginx service
+# tasks file for lighthouse-role

@@ -1,0 +1,6 @@
+---
+necessary_packages:
+  - epel-release
+  - unzip
+  - nginx
+# vars file for lighthouse-role
